@@ -1,4 +1,15 @@
 # COLOR CONSTANTS
+from random import randint as rnd
+
+def rand_color():
+    r = rnd(0,255)
+    g = rnd(0,255)
+    b = rnd(0,255)
+    
+    color = (r,g,b)
+
+    return color
+
 
 #BLACK AND WHITE
 WHITE = (255,255,255)

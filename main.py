@@ -8,6 +8,7 @@ from pygame.time import delay as slp
 
 from colors import *
 from pygame_config import *
+import classes_and_objects.shapes as shapes
 
 def init_game():
     pygame.init()
@@ -18,9 +19,13 @@ def init_game():
     return window
 
 # Draw Function to update graphics
-def draw(window):
+def draw(window, shapes):
     
     window.fill(WHITE) # 15
+
+    for shape in shapes:
+        shape.draw()
+
     pygame.display.update()
 
 def handle_events():
@@ -34,12 +39,13 @@ def main(): # MAIN FUNCTION
     window = init_game()
     clock = pygame.time.Clock()
 
-    run = True
     # ADD ALL OBJECTS/CLASSES BELOW HERE
 
+    shapes_list = []
 
     
     # ADD ALL OBJECTS/CLASSES ABOVE HERE
+    run = True
     while run: # run set to true, program runs while run is true.
 
         clock.tick(FPS) # FPS Tick
@@ -50,8 +56,20 @@ def main(): # MAIN FUNCTION
         #         run = False
         #         break
         
-        draw(window) # UPDATES SCREEN
 
+        shape_type = rnd(0,2)
+
+        shape_options = {
+            0 : shapes.Circ(window, rand_color(), (rnd(0,SCREEN_WIDTH), rnd(0,SCREEN_HEIGHT)),rnd(1,50)),
+            1 : shapes.Rectangle(window, rand_color(), rnd(0,SCREEN_WIDTH), rnd(0,SCREEN_HEIGHT), rnd(10,100), rnd(10,100)),
+            2 : shapes.Line(window, rand_color(), ((rnd(0,SCREEN_WIDTH), rnd(0,SCREEN_HEIGHT))), ((rnd(0,SCREEN_WIDTH), rnd(0,SCREEN_HEIGHT))), rnd(2,10))
+        }
+
+        new_shape = shape_options[shape_type]
+
+        shapes_list.append(new_shape)
+
+        draw(window, shapes_list) # UPDATES SCREEN
 
     pygame.quit()
     quit()
